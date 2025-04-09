@@ -36,3 +36,34 @@ const signUp = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+const login= async(req , res)=>{
+  try{
+    const {email,password}=req.body
+     const user = await User.findOne({email})
+     if(!user){
+      return res.status(404).json({message:"User not found"})
+     }
+    //  check if the pass is valid or not
+     const validpass = await bcrypt.compare(password, user.password);
+     if (!validpass) {
+         return res.status(401).json({ message: "Invalid password" });
+     }
+    //  generate jwt token 
+     const token = jwt.sign(
+      { id: user._id, email: user.email },
+      "process.env.secret_key", 
+      { expiresIn: "1h" }
+
+     
+    );
+
+    res.json({token})
+
+  }catch(err){
+    res.status(500).json({message:err.message})
+  }
+}
+
+
+module.exports={login,signUp}
