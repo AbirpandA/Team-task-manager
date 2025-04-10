@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const User= require('./models/user.js');
 
 const taskSchema = new mongoose.Schema({
 
@@ -14,11 +15,26 @@ const taskSchema = new mongoose.Schema({
         type:Date,
         required:true
     },
-    completed:{
-        type:Boolean,
-        default:false
-    }
 
+    createdby:{ 
+
+        type:mongoose.Schema.ObjectId,
+        ref:'User'
+    },
+    group:{
+        type: mongoose.Schema.ObjectId,
+        ref:'Group'
+
+    },
+    participants:[{
+          user: {type:mongoose.Schema.ObjectId,
+          ref:'User'},
+          status: { 
+            type: String, 
+            enum: ['Pending', 'In Progress', 'Completed'], default: 'Pending'
+        }
+    }]
+    
 })
 
 const Task = mongoose.model("Task", taskSchema);
