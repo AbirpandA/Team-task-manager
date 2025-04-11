@@ -1,6 +1,8 @@
 
 const mongoose = require('mongoose');
 const User= require('./models/user.js');
+const group = require('./group.js');
+
 
 const taskSchema = new mongoose.Schema({
 
@@ -24,7 +26,7 @@ const taskSchema = new mongoose.Schema({
     },
     group:{
         type: mongoose.Schema.ObjectId,
-        ref:'Group'
+        ref:'group'
 
     },
     participants:[{
