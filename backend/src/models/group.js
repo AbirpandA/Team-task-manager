@@ -5,12 +5,12 @@ const Task = require('./models/Task.js');
 const groupSchema = new mongoose.Schema({
     groupname:{
         type:String,
-        require:true,
+        required:true,
         unique:true
     },
     code:{
         type:String,
-        require:true,
+        required:true,
         unique:true
     },
     task:[{
@@ -27,4 +27,4 @@ const groupSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model["GroupSchema",groupSchema]
+module.exports = mongoose.model["Group",groupSchema]
